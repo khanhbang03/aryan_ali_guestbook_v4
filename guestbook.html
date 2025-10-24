@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guestbook | Aryan & Ali</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+<div class="fade-in">
+  <h1>Guestbook for Aryan & Ali 🌈</h1>
+  <div id="guestbookContainer">
+    <form id="guestForm">
+      <input type="text" id="name" placeholder="Your Name" required><br>
+      <textarea id="message" rows="3" placeholder="Your Message" required></textarea><br>
+      <button type="submit">Send Wish 💌</button>
+    </form>
+    <div id="entries"></div>
+    <br>
+    <button id="saveBtn">📸 Save Guestbook as Image</button>
+    <br><br>
+    <a href="index.html"><button>Back to Home 🏠</button></a>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+const form = document.getElementById('guestForm');
+const entries = document.getElementById('entries');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const msg = document.getElementById('message').value.trim();
+  if (name && msg) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<strong>${name}</strong><br>${msg}`;
+    entries.prepend(card);
+    form.reset();
+  }
+});
+
+// Save screenshot
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const target = document.getElementById('guestbookContainer');
+  html2canvas(target, {backgroundColor: '#ffffff'}).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'guestbook_screenshot.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+});
+</script>
+</body>
+</html>
